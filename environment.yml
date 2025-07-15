@@ -1,12 +1,13 @@
-name: steel_classifier
+name: streamlitpy310
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.10.18
+  - python=3.10
+  - tensorflow=2.12.0
   - streamlit=1.35.0
-  - tensorflow=2.15.0
-  - numpy=1.24.3
-  - pyarrow=14.0.1
-  - pillow
-  - protobuf>=3.20,<4.0
+  - numpy=1.23.5
+  - pillow=9.5.0
+  - pip
+  - pip:
+      - protobuf==4.23.4
