@@ -50,7 +50,7 @@ st.sidebar.title("📊 Model Visuals")
 with st.sidebar.expander("📌 Confusion Matrix"):
     try:
         image_path = f"graphs/{image_map[model_option]}"
-        st.image(image_path, use_column_width=True, caption="Confusion Matrix")
+        st.image(image_path, use_container_width=True, caption="Confusion Matrix")
     except KeyError:
         st.warning(f"No confusion matrix available for: {model_option}")
     except Exception as e:
@@ -66,7 +66,7 @@ uploaded_file = st.file_uploader("Upload an image", type=["bmp", "jpg", "png"])
 
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    st.image(image, caption="Uploaded Image", use_container_width=True)
 
     img_tensor = preprocess_image(test_image, model_option)
 
@@ -102,7 +102,7 @@ for i, img_path in enumerate(test_images):
     with cols[i % 4]:
         if st.button(f"Use {os.path.basename(img_path)}", key=img_path):
             test_image = Image.open(img_path).convert("RGB")
-            st.image(test_image, caption="Test Image", use_column_width=True)
+            st.image(test_image, caption="Test Image", use_container_width=True)
             img_tensor = preprocess_image(test_image)
             pred_index, pred_confidence, raw_pred = get_prediction(model, img_tensor)
             st.success(f"**Class:** {class_map[pred_index]} | **Confidence:** {pred_confidence:.2f}%")

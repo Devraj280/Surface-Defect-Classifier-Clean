@@ -1,6 +1,5 @@
+[global]
+dataFrameSerialization = "legacy"
+
 [server]
-pythonVersion = "3.10"
-[server]
-headless = true
-port = 7860
 enableCORS = false
