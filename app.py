@@ -78,9 +78,16 @@ def run_prediction(image, label="Image"):
     except Exception as e:
         st.error(f"Prediction failed: {e}")
 
+# Handle Uploaded Image Safely
 if uploaded_file:
-    image = Image.open(uploaded_file).convert("RGB")
-    run_prediction(image, label="Uploaded Image")
+    if uploaded_file.size == 0:
+        st.error("⚠️ Uploaded file is empty. Please upload a valid image.")
+    else:
+        try:
+            image = Image.open(uploaded_file).convert("RGB")
+            run_prediction(image, label="Uploaded Image")
+        except Exception as e:
+            st.error(f"⚠️ Failed to process uploaded image: {e}")
 
 # Sample Test Images
 st.markdown("---")
@@ -92,5 +99,8 @@ cols = st.columns(4)
 for i, img_path in enumerate(test_images):
     with cols[i % 4]:
         if st.button(f"Use {os.path.basename(img_path)}", key=img_path):
-            test_image = Image.open(img_path).convert("RGB")
-            run_prediction(test_image, label=os.path.basename(img_path))
+            try:
+                test_image = Image.open(img_path).convert("RGB")
+                run_prediction(test_image, label=os.path.basename(img_path))
+            except Exception as e:
+                st.error(f"Error loading test image: {e}")
