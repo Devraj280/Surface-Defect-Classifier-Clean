@@ -1,6 +1,5 @@
 import tensorflow as tf
 import numpy as np
-from PIL import Image
 
 # Steel fault class map
 class_map = {
@@ -25,25 +24,27 @@ def load_model(model_path):
         interpreter = tf.lite.Interpreter(model_path=model_path)
         interpreter.allocate_tensors()
         return interpreter
-    return tf.keras.models.load_model(model_path)
+    else:
+        return tf.keras.models.load_model(model_path)
 
 def preprocess_image(image, model_type="MobileNetV2"):
-    target_size = (224, 224)  # Use 224x224 for ALL models including Custom CNN
+    """Resize and normalize image for model input."""
+    target_size = (224, 224)
     image = image.resize(target_size)
     image = np.array(image, dtype=np.float32) / 255.0
-    image = np.expand_dims(image, axis=0)
-    return image
+    return np.expand_dims(image, axis=0)
 
 def get_prediction(model, img_tensor):
-    """Get prediction from a TensorFlow or TFLite model."""
+    """Run inference and return predicted index, confidence, and raw scores."""
     if isinstance(model, tf.lite.Interpreter):
-        model.set_tensor(model.get_input_details()[0]['index'], img_tensor)
+        input_index = model.get_input_details()[0]['index']
+        output_index = model.get_output_details()[0]['index']
+        model.set_tensor(input_index, img_tensor)
         model.invoke()
-        raw_pred = model.get_tensor(model.get_output_details()[0]['index'])[0]
-        pred_index = np.argmax(raw_pred)
-        pred_confidence = np.max(raw_pred) * 100
+        raw_pred = model.get_tensor(output_index)[0]
     else:
         raw_pred = model.predict(img_tensor)[0]
-        pred_index = np.argmax(raw_pred)
-        pred_confidence = np.max(raw_pred) * 100
+
+    pred_index = int(np.argmax(raw_pred))
+    pred_confidence = float(np.max(raw_pred)) * 100
     return pred_index, pred_confidence, raw_pred
