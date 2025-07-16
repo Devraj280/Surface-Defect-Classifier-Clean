@@ -1,5 +1,0 @@
-libblas3
-libblas-dev
-libgfortran5
-liblapack3
-liblapack-dev

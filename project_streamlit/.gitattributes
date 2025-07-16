@@ -1,4 +1,0 @@
-models/model_c.h5 filter=lfs diff=lfs merge=lfs -text
-models/model_m.h5 filter=lfs diff=lfs merge=lfs -text
-models/model_r.h5 filter=lfs diff=lfs merge=lfs -text
-*.h5 filter=lfs diff=lfs merge=lfs -text
