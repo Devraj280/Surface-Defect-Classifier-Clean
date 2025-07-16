@@ -28,11 +28,7 @@ def load_model(model_path):
     return tf.keras.models.load_model(model_path)
 
 def preprocess_image(image, model_type="MobileNetV2"):
-    """Preprocess image for the specified model."""
-    if model_type == "Custom CNN":
-        target_size = (200, 200)
-    else:
-        target_size = (224, 224)
+    target_size = (224, 224)  # Use 224x224 for ALL models including Custom CNN
     image = image.resize(target_size)
     image = np.array(image, dtype=np.float32) / 255.0
     image = np.expand_dims(image, axis=0)
