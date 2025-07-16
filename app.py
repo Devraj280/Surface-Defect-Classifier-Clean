@@ -55,7 +55,7 @@ st.write("Upload a steel image (`.bmp`, `.jpg`, `.png`) to detect fault class us
 uploaded_file = st.file_uploader("Upload an image", type=["bmp", "jpg", "png"])
 
 def run_prediction(image, label="Image"):
-    st.image(image, caption=label, use_container_width=True)
+    st.image(image, caption=label)
     img_tensor = preprocess_image(image, model_option)
 
     try:
