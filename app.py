@@ -65,16 +65,6 @@ def run_prediction(image, label="Image"):
         st.bar_chart(raw_pred)
 
         # Download Prediction
-        st.download_button(
-            label="📥 Download Prediction (JSON)",
-            data=json.dumps({
-                "class": class_map[pred_index],
-                "confidence": f"{pred_confidence:.2f}%",
-                "raw_output": raw_pred.tolist()
-            }, indent=2),
-            file_name="prediction_result.json",
-            mime="application/json"
-        )
     except Exception as e:
         st.error(f"Prediction failed: {e}")
 
