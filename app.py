@@ -42,7 +42,7 @@ st.sidebar.title("📊 Model Visuals")
 with st.sidebar.expander("📌 Confusion Matrix"):
     try:
         image_path = f"graphs/{image_map[model_option]}"
-        st.image(image_path, caption="Confusion Matrix")  # Removed use_container_width
+        st.image(image_path, caption="Confusion Matrix") 
     except KeyError:
         st.warning(f"No confusion matrix available for: {model_option}")
     except Exception as e:
@@ -55,7 +55,7 @@ st.write("Upload a steel image (`.bmp`, `.jpg`, `.png`) to detect fault class us
 uploaded_file = st.file_uploader("Upload an image", type=["bmp", "jpg", "png"])
 
 def run_prediction(image, label="Image"):
-    st.image(image, caption=label)  # Removed use_container_width
+    st.image(image, caption=label)
     img_tensor = preprocess_image(image, model_option)
 
     try:
@@ -64,7 +64,7 @@ def run_prediction(image, label="Image"):
         st.success(f"**Class:** {class_map[pred_index]} | **Confidence:** {pred_confidence:.2f}%")
         st.bar_chart(raw_pred)
 
-        # Download Prediction
+    
     except Exception as e:
         st.error(f"Prediction failed: {e}")
 
